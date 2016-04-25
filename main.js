@@ -32,9 +32,10 @@ function update(datapoint) {
 
 function loadPosts() {
   $.ajax({
-		url: "http://localhost/redesign/wordpress/api/poops/count_posts",
+		url: "http://samgalison.com/wordpress/api/poops/count_posts",
 		type: "GET"
-	}).done(function (data) {
+	}).success(function (data) {
+    console.log(data);
     total = data.ids.length;
     $("#tot").text(total);
 		console.log("XXXXXXXXXXX POST COUNT XXXXXXXXXXX");
@@ -53,18 +54,19 @@ function loadPosts() {
 
   function getone(id) {
 
-    d3.json("http://localhost/redesign/wordpress/api/get_post/?post_type=project&post_id=" + id, function(err, data) {
+    // d3.json("http://localhost/redesign/wordpress/api/get_post/?post_type=project&post_id=" + id, function(err, data) {
+    //   posts.push(data);
+    //   update(data);
+    // });
+
+    $.ajax({
+			url: "http://samgalison.com/wordpress/api/get_post/?post_type=project&post_id=" + id,
+      type: "GET"
+    }).success(function(data) {
+      curr++;
+      $("#curr").text(curr);
       posts.push(data);
       update(data);
     });
-
-    // $.ajax({
-		// 	url: "http://localhost/redesign/wordpress/api/get_post/?post_type=project&post_id=" + id,
-    //   type: "GET"
-    // }).success(function(data) {
-    //   curr++;
-    //   $("#curr").text(curr);
-    //   update(data);
-    // });
   }
 }
